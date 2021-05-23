@@ -1,0 +1,53 @@
+header {
+  height: 76px;
+  background-color: #7f7f7f;
+  display: flex;
+  justify-content: space-around;
+}
+
+.logo,
+.info,
+.links {
+  height: 100%;
+  width: 70px;
+  color: white;
+}
+
+.logo {
+  background-image: url('https://media.istockphoto.com/vectors/modern-house-flat-logo-icon-creative-design-stock-vector-illustration-vector-id968907542?k=6&m=968907542&s=170667a&w=0&h=fi1_ppD3cNKlw0Ezb_cqoc3JxOaRVUZkBMa_zf503N8=');
+  background-size: cover;
+  background-position: center;
+  height: 60px;
+  margin-top: 8px;
+  cursor: pointer;
+  border-radius: 24px;
+}
+
+.info{
+    width: 300px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    div{
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 7px;
+    }
+    h5{
+        width: 200px;
+        text-align: center;
+    }
+    span:hover{
+        text-decoration: underline;
+        cursor: pointer;
+
+    }
+}
+
+.links{
+    line-height: 76px;
+    text-align: center;
+    cursor: pointer;
+}

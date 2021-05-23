@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="card" style="width: 18rem;" *ngFor="let flat of arrayFlats">
+    <img [src]="flat.photo" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{flat.adress}}</h5>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Ім'я: {{flat.name}}</li>
+      <li class="list-group-item">Телефон: {{flat.phone}}</li>
+      <li class="list-group-item">Ціна: {{flat.prise}} грн</li>
+    </ul>
+  </div>
+</div>

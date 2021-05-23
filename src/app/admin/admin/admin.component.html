@@ -1,0 +1,76 @@
+<div class="container">
+  <form>
+    <div class="mb-3">
+    </div>
+    <div class="mb-3">
+      <label for="name" class="form-label">Адресса:</label>
+      <input type="text" class="form-control" [(ngModel)]="adress" name="adress">
+    </div>
+    <div class="mb-3">
+      <label for="name" class="form-label">Ціна:</label>
+      <input type="text" class="form-control" [(ngModel)]="prise" name="prise">
+    </div>
+    <div class="mb-3">
+      <label for="name" class="form-label">Телефон:</label>
+      <input type="text" class="form-control" [(ngModel)]="phone" name="phone">
+    </div>
+    <div class="mb-3">
+      <label for="name" class="form-label">Ім'я:</label>
+      <input type="text" class="form-control" [(ngModel)]="name" name="name">
+    </div>
+    <div class="mb-3">
+        <label for="name" class="form-label">Фото:</label>
+        <input type="text" class="form-control" [(ngModel)]="photo" name="photo">
+      </div>
+    <!-- <ng-container *ngIf="!imageStatus; else elseTemplate">
+      <div class="custom-file">
+        <input (change)="uploadFile($event)" type="file" class="custom-file-input" id="urlImage" required
+          style="color: white;">
+        <label class="custom-file-label" for="urlImage">Choose file...</label>
+      </div>
+      <div class="progress mt-3 mb-3">
+        <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+          [style.width]="(uploadPercent | async) + '%'" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+    </ng-container>
+    <ng-template #elseTemplate>
+      <div class="image mb-3">
+        <img [src]="image" alt="" width="300px">
+        <i class="bi bi-trash ml-3" style="color: white; cursor: pointer;" (click)="deleteImage()"></i>
+      </div>
+    </ng-template> -->
+    <button type="button" class="btn btn-success" (click)="addFlat()" *ngIf="!editStatus">Add</button>
+    <button type="button" class="btn btn-primary" (click)="save()" *ngIf="editStatus">Save</button>
+  </form>
+  <hr class="mb-3 mt-3">
+  <table class="table align-middle" style="text-align: center;">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Image</th>
+        <th scope="col">Address</th>
+        <th scope="col">Price</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Name</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody class="align-middle">
+      <tr *ngFor="let flat of arrayFlats,index as i">
+        <td>{{i+1}}</td>
+        <td> <img height="70" width="100" [src]="flat.photo" alt=""></td>
+        <td>{{flat.adress}}</td>
+        <td>{{flat.prise}}</td>
+        <td>{{flat.phone}}</td>
+        <td>{{flat.name}}</td>
+        <td>
+          <button class="btn btn-warning" (click)="edit(flat)">Edit</button>
+        </td>
+        <td>
+          <button class="btn btn-danger" (click)="delete(flat.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
