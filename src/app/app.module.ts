@@ -8,8 +8,6 @@ import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/about/about.component';
-import { CategoryComponent } from './admin/category/category.component';
-import { ProductComponent } from './admin/product/product.component';
 import { ContactsComponent } from './pages/contacts/contacts.component';
 import { AdminComponent } from './admin/admin/admin.component';
 import { FormsModule } from '@angular/forms';
@@ -20,8 +18,6 @@ import { FormsModule } from '@angular/forms';
     FooterComponent,
     HomeComponent,
     AboutComponent,
-    CategoryComponent,
-    ProductComponent,
     ContactsComponent,
     AdminComponent
   ],
