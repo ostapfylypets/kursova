@@ -1,0 +1,171 @@
+USE new_schema;
+
+ CREATE TABLE CUSTOMER (
+ID INT NOT NULL,
+first_name VARCHAR(50) NOT NULL,
+last_name VARCHAR(50) NOT NULL,
+age int NOT NULL,
+city VARCHAR(50) NOT NULL,
+phone_number VARCHAR(50) NOT NULL,
+email VARCHAR(50) NOT NULL,
+DATE_CONTRACT_ID INT NOT NULL
+
+);
+
+ 
+ CREATE TABLE Building (
+    ID INT NOT NULL,
+    APPARTMENT_ID int not null,
+    construction_year INT NOT NULL,
+    street varchar (50),
+    adress_number varchar(50) not null,
+	floors INT NOT NULL
+);
+
+CREATE TABLE CITY (ID INT NOT NULL, 
+nameCITY VARCHAR(30),
+Building_ID INT NOT NULL
+);
+
+CREATE TABLE APPARTMENT (
+   ID INT NOT NULL,
+   floor INT NOT NULL,
+   room INT NOT NULL,
+   price INT NOT NULL,
+   adress varchar(50)
+);
+
+ 
+ CREATE TABLE DATE_CONTRACT (
+ ID INT NOT NULL, 
+ name_empl VARCHAR(50) not null,
+age_contrakt int NOT NULL,
+rent_amount decimal not null,
+remont_price int  not null,
+terms VARCHAR(50) NOT NULL,
+APPARTMENT_ID int not null
+);
+
+ALTER TABLE APPARTMENT ADD CONSTRAINT APPARTMENT_ID PRIMARY KEY (ID);
+ALTER TABLE DATE_CONTRACT ADD FOREIGN KEY (Appartment_ID) REFERENCES Appartment(ID);
+ALTER TABLE Building ADD FOREIGN KEY (Appartment_ID) REFERENCES Appartment(ID);
+
+ ALTER TABLE  Building ADD CONSTRAINT  Building_ID PRIMARY KEY (ID);
+ ALTER TABLE CITY ADD FOREIGN KEY (Building_ID) REFERENCES Building(ID);
+
+ALTER TABLE DATE_CONTRACT  ADD CONSTRAINT DATE_CONTRACT_ID PRIMARY KEY (ID);
+ ALTER TABLE CUSTOMER ADD FOREIGN KEY (DATE_CONTRACT_ID) REFERENCES DATE_CONTRACT(ID);
+ 
+  
+INSERT INTO APPARTMENT (ID,adress,floor,room,price) VALUES
+    (1,'Trak-hlyn',3,4,20000),
+	(2,'Tratn',4,6,20000),
+    (3,'Merg',24,5,19000),
+    (4,'arten',8,23,13000),
+    (5,'Shevchenka',8,3,25000),
+    (6,'chreschatyk',3,9,20000),
+    (7,'Mykolaychuka',2,5,30000),
+    (8,'Trak-hlyn',4,9,40000);
+
+
+
+ INSERT INTO DATE_CONTRACT(ID,name_empl,age_contrakt,rent_amount,remont_price,terms,APPARTMENT_ID ) VALUES
+    (1,'Ostap',12,500,2060,'october',1),
+	(2,'Andriy',1,400,3060,'June',2),
+    (3,'Yaroslav',200,1900,406,'July',3),
+    (4,'Myroslav',1000,2300,506,'May',4),
+    (5,'Taras',1,2380,1500,'february',5),
+    (6,'Oleg',11,90,3000,'june',6),
+    (7,'Yulia',23,800,5000,'april',7),
+    (8,'Anya',8,1200,9000,'july',8);
+    
+    INSERT INTO Building(ID,APPARTMENT_ID ,construction_year, street,adress_number,floors ) VALUES
+    (1,1,21,'Trakt','Trakt 21',6),
+     (2,2,121,'Shevchenka','Shevchenka 121',5),
+      (3,3,21,'Trakt2','Trakt 211',61),
+       (4,4,11,'Trakt3','Trakt 121',3),
+        (5,5,41,'Trakt4','Trakt 214',16),
+         (6,6,61,'Trakt5','Trakt 215',6),
+          (7,7,1,'Trakt6','Trakt 216',12),
+           (8,8,5,'Trakt7','Trakt 217',9);
+           
+    
+    INSERT INTO CUSTOMER(ID,first_name,last_name,age,city,phone_number,email,DATE_CONTRACT_ID ) VALUES
+    (1,'Ostap','fylypets',2001,'Kyiv','fylypets@1','+3801',1),
+	(2,'Yulia','Full2',2001,'Lviv','fylypets@1','+3802',2),
+    (3,'Olya','fylypets3',2002,'CHERSON','fylypets@5','+3803',3),
+    (4,'Tanya','fylypets4',2001,'Odessa','fylypets@4','+3804',4),
+    (5,'Colya','fylypets5',2005,'Dnipro','fylypets@#3','+3805',5),
+    (6,'Oleg','fylypets6',2004,'Any','fylypets@2','+3806',6),
+    (7,'Ostap','fylypets7',205,'Lviv','fylypets1@','+3807',7),
+    (8,'Nastya','fylypets8',202,'Kyiv','fylypets@@','+3808',8);
+    
+   
+    
+     INSERT INTO CITY( ID,nameCity,Building_ID) VALUES
+    (1,'Kyiv',1),
+	(2,'Lviv',2),
+    (3,'Odessa',3),
+    (4,'Cherson',4),
+    (5,'Ternopil',5),
+    (6,'Filadelphia',6),
+    (7,'Rivne',7),
+    (8,'Frankivsk',8);
+
+-- 1. Оплата частинами. квартири на 12 місяців з помісячною оплатою. Квартира має більше 7 кімнат ,
+     SELECT price/12 ,adress FROM APPARTMENT
+      WHERE  room>7;
+      
+-- 2. Пошук орендодавців у місті львові
+      select first_name,last_name,age,city,phone_number,email FROM CUSTOMER
+        WHERE city = 'Lviv';
+        
+-- 3. пошук людини яка готова знімати в вас квартиру за такою ціною
+  select name_empl ,age_contrakt ,rent_amount  from DATE_CONTRACT
+  where rent_amount  >= 1000 AND rent_amount <= 2000;
+  
+-- 4. показати adress,floor,room,price квартир які доступні на вулиці 'Trak-hlyn'
+  SELECT adress,floor,room,price FROM appartment
+        WHERE adress = 'Trak-hlyn'  ;
+        
+-- 5. пошук людини яка готова заїхати до вас в травні      
+SELECT name_empl,age_contrakt,rent_amount FROM  DATE_CONTRACT
+ WHERE terms = 'May';
+
+-- 6. пошук будинку на вулицях які нам підходять 
+SELECT * FROM  Building WHERE street = 'Shevchenka'
+ UNION
+ SELECT * FROM  Building WHERE street = 'Trakt7' ;
+ 
+ -- 7. пошук найдешевшої квартири
+  SELECT * FROM appartment
+ WHERE price = (SELECT MIN(price) FROM appartment);
+ 
+ -- 8. пошук  квартири , яка коштує менше середньго 
+  SELECT * FROM appartment
+ WHERE price < (SELECT AVG(price) FROM appartment);
+ 
+  -- 9. пошук  квартири , яка має найменше років
+ SELECT * FROM Building
+ WHERE construction_year = (SELECT MIN(construction_year) FROM Building);
+ 
+ -- 10. Сортирування людей від найменшої плати за оренду до найбільшої
+SELECT * FROM DATE_CONTRACT WHERE rent_amount>0 ORDER BY rent_amount;
+
+-- 11. Середня ціна квартир за адресою 'Trak-hlyn'
+ SELECT AVG(price) as avg FROM APPARTMENT
+ where adress='Trak-hlyn';
+
+-- 12. Пошук квартир за особливою ціною
+SELECT COUNT(*) as count FROM APPARTMENT WHERE price=20000;
+
+-- 13. Ціна скільки вам вийде оренда за тиждень в квартирі яку здає людина на ваш вибір
+select rent_amount*7 from DATE_CONTRACT
+where name_empl='Ostap';
+
+-- 14. Пошук будинку в якому ми виставляэм промыжок по числу років коли його збудували
+SELECT * FROM Building WHERE construction_year BETWEEN 1 AND 8;
+
+-- 15. Найдорожчий будинок за адресою
+select adress,price from appartment
+where price=(SELECT max(price) FROM appartment)
